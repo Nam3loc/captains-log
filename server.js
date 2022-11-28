@@ -44,6 +44,11 @@ app.post('/', (req, res) => {
     });
 })
 
+// INDEX
+app.get('/', (req, res) => {
+    res.render('/Index');
+})
+
 
 
 app.listen(port, () => {
