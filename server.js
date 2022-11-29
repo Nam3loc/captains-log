@@ -4,7 +4,8 @@ const app = express();
 const port = 3000;
 const reactViews = require('express-react-views');
 const mongoose = require('mongoose');
-const Log = require('./models/logs')
+const Log = require('./models/logs');
+const methodOverride = require('method-override');
 
 
 // CONNECTION TO DATABASE
@@ -23,7 +24,8 @@ app.engine('jsx', reactViews.createEngine());
 
 
 // MIDDLEWARE
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: false}));
+app.use(methodOverride('_method'));
 
 // Seed Route
 app.get("/logs/seed", (req, res) => {
@@ -67,6 +69,18 @@ app.get('/logs/new', (req, res) => {
     res.render('New');
 })
 
+// DELETE
+app.delete('/logs/:id', (req, res) => {
+    req.body.shipIsBroken = req.body.shipIsBroken === 'on' ? true : false;
+    Log.findByIdAndDelete(req.params.id, req.body, (err, updatedLog) => {
+        if(!err) {
+            res.status(200).redirect(`/logs`)
+        } else {
+            res.status(400). send(err);
+        }
+    })
+})
+
 // CREATE
 app.post('/logs', (req, res) => {
     req.body.shipIsBroken = req.body.shipIsBroken === 'on' ? true : false;
@@ -80,7 +94,18 @@ app.post('/logs', (req, res) => {
     });
 })
 
-
+// SHOW
+app.get('/logs/:id', (req, res) => {
+    Log.findById(req.params.id, (err, foundLog) => {
+        if(!err) {
+            res.status(200).render('Show', {
+                logs: foundLog
+            })
+        } else {
+            res.status(400).send(err)
+        }
+    })
+})
 
 app.listen(port, () => {
     console.log(`Listening on port: ${port}`);
