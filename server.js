@@ -25,28 +25,59 @@ app.engine('jsx', reactViews.createEngine());
 // MIDDLEWARE
 app.use(express.urlencoded({extended: false}))
 
+// Seed Route
+app.get("/logs/seed", (req, res) => {
+    Log.create([
+      {
+        title:'grapefruit',
+        entry:'pink',
+        shipIsBroken: true
+      },
+      {
+        title:'grapefruit',
+        entry:'pink',
+        shipIsBroken: true
+      },
+      {
+        title:'grapefruit',
+        entry:'pink',
+        shipIsBroken: true
+      }
+    ], (err, data) => {
+    //   res.redirect("/logs")
+    console.log(data);
+    })
+  })
+
+// INDEX
+app.get('/logs', (req, res) => {
+    Log.find({}, (err, allLogs) => {
+        if(!err) {
+            res.status(200).render('Index', {
+                logs: allLogs
+            })
+        } else {
+            res.status(400).send(err)
+        }
+    })
+})
 
 // NEW
-app.get('/', (req, res) => {
+app.get('/logs/new', (req, res) => {
     res.render('New');
 })
 
 // CREATE
-app.post('/', (req, res) => {
+app.post('/logs', (req, res) => {
     req.body.shipIsBroken = req.body.shipIsBroken === 'on' ? true : false;
 
     Log.create(req.body, (err, createdLog) => {
         if(!err) {
-            res.status(200).redirect('/');
+            res.status(200).redirect('/logs');
         } else {
             res.status(400).send(err);
         }
     });
-})
-
-// INDEX
-app.get('/', (req, res) => {
-    res.render('/Index');
 })
 
 

@@ -5,18 +5,18 @@ class Index extends React.Component {
     render() {
         const { logs } = this.props
         return (
-            <DefaultLayout title="Logs Index Page">
+            <DefaultLayout>
                 <h1>Logs Index Page</h1>
                 <nav>
-                    <a href="/new">Create Log</a>
+                    <a href="/logs/new">Create Log</a>
                 </nav>
                 <ul>
                     {
-                        logs.map((fruit, i) => {
+                        logs.map((log, i) => {
                             return (
                                 <li>
-                                    {logs.title} <br />
-                                    <form action={`/logs/${logs._id}?_method=DELETE`} method="POST">
+                                    {log.title} <br />
+                                    <form action={`/logs/${log._id}?_method=DELETE`} method="POST">
                                         <input type="submit" value="DELETE" />
                                     </form>
                                 </li>
