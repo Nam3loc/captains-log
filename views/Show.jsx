@@ -14,7 +14,8 @@ class Show extends React.Component {
                 <div>
                     <p>{title}</p>
                     <p>{entry}</p>
-                    <p>{shipIsBroken? 'The ship is broken!' : "The ship is in good condition"}</p>
+                    <p>{shipIsBroken? 'The ship is broken!' : "The ship is in good condition"}</p><br />
+                    <button><a href="/logs">Back To Home Page</a></button>
                 </div>
             </DefaultLayout>
         )
