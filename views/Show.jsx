@@ -5,15 +5,15 @@ class Show extends React.Component {
     render() {
         const {title, entry, shipIsBroken} = this.props.logs
         return (
-            <DefaultLayout title={`${title} Show Page`
+            <DefaultLayout title={"Captain's Log"
                 .toLowerCase() // Capitalizes every word
                 .split(' ')
                 .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(' ')
             }>
                 <div>
-                    <p>{title}</p>
-                    <p>{entry}</p>
+                    <p>{`Log: ${title}`}</p>
+                    <p>{`Entry: ${entry}`}</p>
                     <p>{shipIsBroken? 'The ship is broken!' : "The ship is in good condition"}</p><br />
                     <button><a href="/logs">Back To Home Page</a></button>
                 </div>

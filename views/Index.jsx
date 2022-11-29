@@ -6,7 +6,7 @@ class Index extends React.Component {
         const { logs } = this.props
         return (
             <DefaultLayout>
-                <h1>Logs Index Page</h1>
+                <h1>Logs Directory</h1>
                 <nav>
                     <a href="/logs/new">Create Log</a>
                 </nav>
